@@ -3,7 +3,6 @@ package com.udacity.gradle.builditbigger;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.widget.Toast;
 
 import com.example.android.androidjokelibrary.JokeActivity;
 import com.example.ranjeevmahtani.myapplication.backend.myApi.MyApi;
@@ -40,8 +39,6 @@ public class GetJokeFromServerAsyncTask extends AsyncTask<Context, Void, String>
 
     @Override
     protected void onPostExecute(String result) {
-        Toast.makeText(context, result, Toast.LENGTH_LONG).show();
-
         Intent intent = new Intent(context, JokeActivity.class);
         intent.putExtra(JokeActivity.JOKE_EXTRA, result);
         context.startActivity(intent);

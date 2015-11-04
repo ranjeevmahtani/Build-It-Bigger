@@ -38,15 +38,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void tellJoke(View view){
-
         new GetJokeFromServerAsyncTask().execute(this);
-
-//        String joke = JokeStore.getJoke();
-//        Toast.makeText(this, joke, Toast.LENGTH_SHORT).show();
-//
-//        Intent intent = new Intent(this, JokeActivity.class);
-//        intent.putExtra(JOKE_EXTRA, joke);
-//        startActivity(intent);
     }
 
 

@@ -1,9 +1,7 @@
 package com.udacity.gradle.builditbigger;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,9 +31,6 @@ public class MainActivityFragment extends Fragment {
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
                 .build();
         mAdView.loadAd(adRequest);
-
-        new EndpointsAsyncTask().execute(new Pair<Context, String>(getActivity(), "Ranjeev"));
-        //new GetJokeFromServerAsyncTask().execute(getActivity());
 
         return root;
     }
