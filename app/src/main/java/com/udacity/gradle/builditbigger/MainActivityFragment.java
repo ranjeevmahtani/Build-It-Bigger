@@ -35,6 +35,7 @@ public class MainActivityFragment extends Fragment {
         mAdView.loadAd(adRequest);
 
         new EndpointsAsyncTask().execute(new Pair<Context, String>(getActivity(), "Ranjeev"));
+        //new GetJokeFromServerAsyncTask().execute(getActivity());
 
         return root;
     }
