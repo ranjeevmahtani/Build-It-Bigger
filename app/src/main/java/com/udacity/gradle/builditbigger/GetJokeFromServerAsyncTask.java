@@ -1,5 +1,6 @@
 package com.udacity.gradle.builditbigger;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -40,6 +41,9 @@ public class GetJokeFromServerAsyncTask extends AsyncTask<Context, Void, String>
     @Override
     protected void onPostExecute(String result) {
         Intent intent = new Intent(context, JokeActivity.class);
+        if (!(context instanceof Activity)) {
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        }
         intent.putExtra(JokeActivity.JOKE_EXTRA, result);
         context.startActivity(intent);
 
