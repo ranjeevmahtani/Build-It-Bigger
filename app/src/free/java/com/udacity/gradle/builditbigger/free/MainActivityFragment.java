@@ -2,6 +2,7 @@ package com.udacity.gradle.builditbigger.free;
 
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,8 @@ import com.udacity.gradle.builditbigger.R;
  */
 public class MainActivityFragment extends android.support.v4.app.Fragment
         implements GetJokeFromServerAsyncTask.ProgressBarCallback{
+
+    private static final String LOG_TAG = MainActivityFragment.class.getSimpleName();
 
     InterstitialAd mInterstitialAd;
     ProgressBar mProgressBar;
@@ -66,6 +69,7 @@ public class MainActivityFragment extends android.support.v4.app.Fragment
             @Override
             public void onAdClosed() {
                 requestNewInterstitial();
+                mProgressBar.setVisibility(View.VISIBLE);
                 new GetJokeFromServerAsyncTask(mThisCallback).execute(getActivity());
 
             }
@@ -85,6 +89,7 @@ public class MainActivityFragment extends android.support.v4.app.Fragment
             @Override
             public void onClick(View v) {
                 mProgressBar.setVisibility(View.VISIBLE);
+                Log.d(LOG_TAG, "mProgressBar.getVisibility(): " + mProgressBar.getVisibility());
                 if (mInterstitialAd != null && mInterstitialAd.isLoaded()) {
                     mInterstitialAd.show();
                 } else {
