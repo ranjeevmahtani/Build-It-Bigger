@@ -5,15 +5,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
-import com.udacity.gradle.builditbigger.GetJokeFromServerAsyncTask;
 import com.udacity.gradle.builditbigger.R;
 
 /**
  * Created by ranjeevmahtani on 11/5/15.
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,10 +45,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public void tellJoke(View view){
-        new GetJokeFromServerAsyncTask().execute(this);
     }
 
 }

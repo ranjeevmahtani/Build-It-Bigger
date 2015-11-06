@@ -33,4 +33,6 @@
         ads:adUnitId="@string/banner_ad_unit_id">
     </com.google.android.gms.ads.AdView>
 
+    <include layout="@layout/progress_bar"/>
+
 </RelativeLayout>

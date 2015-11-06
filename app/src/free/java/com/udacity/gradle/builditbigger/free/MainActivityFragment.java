@@ -1,12 +1,12 @@
 package com.udacity.gradle.builditbigger.free;
 
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
@@ -18,9 +18,12 @@ import com.udacity.gradle.builditbigger.R;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MainActivityFragment extends android.support.v4.app.Fragment {
+public class MainActivityFragment extends android.support.v4.app.Fragment
+        implements GetJokeFromServerAsyncTask.ProgressBarCallback{
 
     InterstitialAd mInterstitialAd;
+    ProgressBar mProgressBar;
+    GetJokeFromServerAsyncTask.ProgressBarCallback mThisCallback;
 
     public MainActivityFragment() {
     }
@@ -30,10 +33,15 @@ public class MainActivityFragment extends android.support.v4.app.Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
+        mThisCallback = this;
+
+        mProgressBar = (ProgressBar) rootView.findViewById(R.id.progressBar);
+        mProgressBar.setVisibility(View.GONE);
+
         setUpButton(rootView);
 
         setUpBannerAd(rootView);
-        setUpInterstitialAd(getActivity());
+        setUpInterstitialAd();
         requestNewInterstitial();
 
         return rootView;
@@ -50,8 +58,7 @@ public class MainActivityFragment extends android.support.v4.app.Fragment {
         mAdView.loadAd(adRequest);
     }
 
-    private void setUpInterstitialAd(Context c){
-        final Context context = c;
+    private void setUpInterstitialAd(){
         mInterstitialAd = new InterstitialAd(getActivity());
         mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
 
@@ -59,7 +66,8 @@ public class MainActivityFragment extends android.support.v4.app.Fragment {
             @Override
             public void onAdClosed() {
                 requestNewInterstitial();
-                new GetJokeFromServerAsyncTask().execute(context);
+                new GetJokeFromServerAsyncTask(mThisCallback).execute(getActivity());
+
             }
         });
     }
@@ -76,13 +84,21 @@ public class MainActivityFragment extends android.support.v4.app.Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mProgressBar.setVisibility(View.VISIBLE);
                 if (mInterstitialAd != null && mInterstitialAd.isLoaded()) {
                     mInterstitialAd.show();
                 } else {
-                    new GetJokeFromServerAsyncTask().execute(getActivity());
+                    new GetJokeFromServerAsyncTask(mThisCallback).execute(getActivity());
                 }
             }
         });
+    }
+
+    //GetJokeFromServerAsyncTask.ProgressBarCallback method
+    public void hideProgressBar() {
+        if (mProgressBar != null && mProgressBar.getVisibility() != View.GONE) {
+            mProgressBar.setVisibility(View.GONE);
+        }
     }
 
 }

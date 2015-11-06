@@ -18,6 +18,15 @@ import java.io.IOException;
 public class GetJokeFromServerAsyncTask extends AsyncTask<Context, Void, String> {
     private static MyApi myApiService = null;
     private Context context;
+    private ProgressBarCallback mProgressBarCallback;
+
+    public interface ProgressBarCallback{
+        void hideProgressBar();
+    }
+
+    public GetJokeFromServerAsyncTask(ProgressBarCallback callback){
+        mProgressBarCallback = callback;
+    }
 
     @Override
     protected String doInBackground(Context... params) {
@@ -45,6 +54,7 @@ public class GetJokeFromServerAsyncTask extends AsyncTask<Context, Void, String>
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         }
         intent.putExtra(JokeActivity.JOKE_EXTRA, result);
+        mProgressBarCallback.hideProgressBar();
         context.startActivity(intent);
 
     }
